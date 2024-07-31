@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if category_post.exists %}
+    <h1 class="text-center">{{ categories_types }}</h1>
+    {% for item in category_post %}
+        <div class="card text-center">
+            <div class="card-header">
+                {{ item.category }}
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{ item.title }}</h5>
+                <p class="card-text">{{ item.body|slice:":30" }}</p>
+                <a href="{% url 'article_details' pk=item.pk %}" class="card-link">Details</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'update_post' pk=item.pk %}" class="card-link">Edit</a>
+                    <a href="{% url 'delete_post' pk=item.pk %}" class="card-link">Delete</a>
+                {% endif %}
+                <div class="card-footer text-muted">{{ item.created }}</div>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <h4>Sorry, there are no posts in this category</h4>
+{% endif %}
+
+{% endblock %}

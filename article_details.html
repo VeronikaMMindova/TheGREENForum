@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %} {{ post.title_tag }} {% endblock %}
+
+{% block content %}
+<body>
+<h1>{{ post.title }}</h1>
+<h5>{{ post.body|safe }}</h5>
+<br>
+<small>By: {{ post.author.first_name }}
+            {{ post.author.last_name }} <br>
+    Email: {{ post.author.email }}<br>
+    Date: {{ post.created }}
+    <br>
+</small><br>
+<button class="btn btn-dark">
+    <a href="{% url 'home' %}">
+        Back
+    </a></button>
+{% if user.is_authenticated %}
+<button class="btn btn-warning">
+    <a href="{% url 'update_post' post.pk %}" class="card-link">
+         Edit
+    </a></button>
+<button class="btn btn-danger">
+    <a href="{% url 'delete_post' post.pk %}" class="card-link">
+        Delete
+    </a></button>
+{% endif %}
+</body>
+{% endblock %}
